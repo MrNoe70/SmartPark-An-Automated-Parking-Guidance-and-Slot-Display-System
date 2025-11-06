@@ -18,13 +18,13 @@ int main(void) {
     lcd_print("SmartPark System");
     lcd_set_cursor(1, 0);
     lcd_print("Initializing...");
-    _delay_ms(2000);
+    _delay_ms(5000);
 
     // --- Step 2: Show parking slot statuses ---
     lcd_clear();
 
     // Define 6 slots: all available (0 = available, 1 = occupied)
-    uint8_t slots[6] = {1, 1, 1, 1, 1, 0};
+    uint8_t slots[6] = {0,1, 1, 0, 1, 1};
 
     while (1) {
         // Continuously display static slot statuses

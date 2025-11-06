@@ -30,9 +30,6 @@ void ultrasonic_init(void) {
     gpio_set_direction(ULTRASONIC_TRIGGER_PORT, ULTRASONIC_TRIGGER_PIN, GPIO_PIN_OUTPUT);
     gpio_set_direction(GPIO_PORT_D, ULTRASONIC_ECHO_PIN, GPIO_PIN_INPUT);
 
-    // Enable pull-up on Echo for stability (optional)
-    gpio_set_pullup(GPIO_PORT_D, ULTRASONIC_ECHO_PIN, 0);
-
     // Configure Timer1 for precise pulse timing
     TCCR1A = 0;                     // Normal mode
     TCCR1B = (1 << CS11);           // Prescaler = 8 (0.5µs per tick at 16MHz)
