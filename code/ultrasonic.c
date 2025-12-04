@@ -3,14 +3,14 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-// --- Module-Level Variables ---
+// Module-Level Variables
 volatile uint16_t pulse_start[NUM_SENSORS] = {0};
 volatile uint16_t pulse_end[NUM_SENSORS] = {0};
 volatile uint8_t measurement_active[NUM_SENSORS] = {0};
 volatile uint8_t measurement_done[NUM_SENSORS] = {0};
 volatile uint8_t last_portb_state = 0;
 
-// --- Helper Functions ---
+// Helper Functions
 static uint8_t get_trigger_pin(SensorID_t sensor_id) {
     switch(sensor_id) {
         case SENSOR_1: return TRIGGER_1_PIN;
@@ -23,7 +23,7 @@ static uint8_t get_trigger_pin(SensorID_t sensor_id) {
     }
 }
 
-// --- Initialize All Ultrasonic Sensors ---
+// Initialize All Ultrasonic Sensors
 void ultrasonic_init_all(void) {
     uint8_t i;
     
@@ -72,7 +72,7 @@ void ultrasonic_init_all(void) {
     }
 }
 
-// --- Initialize LEDs ---
+// Initialize LEDs
 void led_init(void) {
     // Initialize LED pins as outputs (different ports)
     
@@ -95,7 +95,7 @@ void led_init(void) {
     gpio_write(LED6_PORT, LED6_PIN, GPIO_PIN_LOW);
 }
 
-// --- Update LED for a specific sensor ---
+// Update LED for a specific sensor
 void update_sensor_led(SensorID_t sensor_id, uint16_t distance) {
     if(sensor_id >= NUM_SENSORS) return;
     
@@ -126,7 +126,7 @@ void update_sensor_led(SensorID_t sensor_id, uint16_t distance) {
     }
 }
 
-// --- Update all LEDs based on distances ---
+// Update all LEDs based on distances
 void update_all_leds(uint16_t distances[]) {
     uint8_t i;
     
@@ -135,7 +135,7 @@ void update_all_leds(uint16_t distances[]) {
     }
 }
 
-// --- Trigger All Sensors Simultaneously ---
+// Trigger All Sensors Simultaneously
 void ultrasonic_trigger_all(void) {
     uint8_t i;
     
@@ -157,7 +157,7 @@ void ultrasonic_trigger_all(void) {
     }
 }
 
-// --- Trigger Single Sensor ---
+// Trigger Single Sensor
 void ultrasonic_trigger_single(SensorID_t sensor_id) {
     if(sensor_id >= NUM_SENSORS) return;
     
@@ -170,7 +170,7 @@ void ultrasonic_trigger_single(SensorID_t sensor_id) {
     gpio_write(TRIGGER_PORT, pin, GPIO_PIN_LOW);
 }
 
-// --- Get Distance from Specific Sensor ---
+// Get Distance from Specific Sensor
 uint16_t ultrasonic_get_distance(SensorID_t sensor_id) {
     uint32_t pulse_duration;
     uint32_t duration_us;
@@ -201,13 +201,13 @@ uint16_t ultrasonic_get_distance(SensorID_t sensor_id) {
     return distance_cm;
 }
 
-// --- Check if Measurement is Complete ---
+// Check if Measurement is Complete
 uint8_t ultrasonic_is_measurement_done(SensorID_t sensor_id) {
     if(sensor_id >= NUM_SENSORS) return 0;
     return measurement_done[sensor_id];
 }
 
-// --- Reset Measurement for a Sensor ---
+// Reset Measurement for a Sensor
 void ultrasonic_reset_measurement(SensorID_t sensor_id) {
     if(sensor_id >= NUM_SENSORS) return;
     measurement_done[sensor_id] = 0;
@@ -216,7 +216,7 @@ void ultrasonic_reset_measurement(SensorID_t sensor_id) {
     pulse_end[sensor_id] = 0;
 }
 
-// --- Pin Change Interrupt Service Routine for PORTB (All 6 sensors) ---
+// Pin Change Interrupt Service Routine for PORTB (All 6 sensors)
 ISR(PCINT0_vect) {
     uint8_t current_state = PINB;
     uint8_t changed_bits = current_state ^ last_portb_state;

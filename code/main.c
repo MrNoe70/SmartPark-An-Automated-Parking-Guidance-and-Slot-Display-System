@@ -4,19 +4,19 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-// --- Constants ---
+// Constants
 #define DIST_THRESHOLD_CM 10      // Distance threshold for car detection
 #define UPDATE_INTERVAL_MS 150    // Time between measurements (150ms)
 #define LED_TEST_DELAY_MS  100    // Delay for LED test sequence
 
-// --- FSM States for Each Slot ---
+// FSM States for Each Slot
 typedef enum {
     STATE_NO_CAR,
     STATE_CAR_DETECTED,
     STATE_ERROR
 } ParkingState_t;
 
-// --- Global Variables ---
+// Global Variables
 ParkingState_t slot_states[NUM_SENSORS] = {STATE_NO_CAR};
 uint16_t slot_distances[NUM_SENSORS] = {0};
 uint8_t slot_status[NUM_SENSORS] = {0};
@@ -24,7 +24,7 @@ uint8_t measurement_cycle = 0;
 uint8_t system_ready = 0;
 uint8_t lcd_needs_update = 1;
 
-// --- Function Prototypes ---
+// Function Prototypes
 void system_init(void);
 void led_test_sequence(void);
 uint8_t perform_measurement_cycle(void);
@@ -35,7 +35,7 @@ void convert_states_to_status(void);
 void display_startup_message(void);
 void display_system_status(void);
 
-// --- Initialize System ---
+// Initialize System
 void system_init(void) {
     // Initialize LCD first
     lcd_init();
@@ -63,7 +63,7 @@ void system_init(void) {
     _delay_ms(500);
 }
 
-// --- Display Startup Message ---
+// Display Startup Message
 void display_startup_message(void) {
     lcd_clear();
     lcd_set_cursor(0, 0);
@@ -80,7 +80,7 @@ void display_startup_message(void) {
     _delay_ms(1500);
 }
 
-// --- Display System Status ---
+// Display System Status
 void display_system_status(void) {
     lcd_clear();
     lcd_set_cursor(0, 0);
@@ -90,7 +90,7 @@ void display_system_status(void) {
     _delay_ms(1000);
 }
 
-// --- LED Test Sequence ---
+// LED Test Sequence
 void led_test_sequence(void) {
     uint8_t i;
     uint8_t j;
@@ -123,7 +123,7 @@ void led_test_sequence(void) {
     lcd_clear();
 }
 
-// --- Update FSM for a Single Slot ---
+// Update FSM for a Single Slot
 uint8_t update_fsm_slot(SensorID_t sensor_id) {
     uint16_t distance;
     ParkingState_t old_state;
@@ -152,7 +152,7 @@ uint8_t update_fsm_slot(SensorID_t sensor_id) {
     return state_changed;
 }
 
-// --- Convert States to Status Array ---
+// Convert States to Status Array
 void convert_states_to_status(void) {
     uint8_t i;
     
@@ -161,7 +161,7 @@ void convert_states_to_status(void) {
     }
 }
 
-// --- Update FSM for All Slots ---
+// Update FSM for All Slots
 void update_fsm_all(void) {
     uint8_t i;
     uint8_t any_state_changed = 0;
@@ -178,7 +178,7 @@ void update_fsm_all(void) {
     }
 }
 
-// --- Update LEDs based on current state ---
+// Update LEDs based on current state
 void update_leds(void) {
     uint8_t i;
     
@@ -187,7 +187,7 @@ void update_leds(void) {
     }
 }
 
-// --- Update LCD Display ---
+// Update LCD Display
 void update_lcd_display(void) {
     uint8_t i;
     uint8_t occupied_count = 0;
@@ -227,7 +227,7 @@ void update_lcd_display(void) {
     }
 }
 
-// --- Perform Measurement Cycle ---
+// Perform Measurement Cycle
 uint8_t perform_measurement_cycle(void) {
     uint8_t all_valid = 1;
     uint8_t i;
@@ -261,7 +261,7 @@ uint8_t perform_measurement_cycle(void) {
     return all_valid;
 }
 
-// --- Main Application ---
+// Main Application
 int main(void) {
     uint8_t measurements_valid;
     
