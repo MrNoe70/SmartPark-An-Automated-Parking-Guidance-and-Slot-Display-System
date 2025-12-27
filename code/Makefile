@@ -1,6 +1,10 @@
 DEVICE     = atmega328p
 CLOCK      = 16000000
+<<<<<<< HEAD
 PROGRAMMER = -c arduino -b 115200 -P COM7
+=======
+PROGRAMMER = -c arduino -b 115200 -P COM4
+>>>>>>> b028cb4a59e53d13bc4401150383cd2914b18671
 OBJECTS    = main.o gpio.o ultrasonic.o lcd.o
 FUSES      = -U hfuse:w:0xde:m -U lfuse:w:0xff:m -U efuse:w:0x05:m
 

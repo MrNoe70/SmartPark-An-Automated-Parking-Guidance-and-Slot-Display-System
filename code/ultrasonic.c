@@ -47,7 +47,11 @@ void ultrasonic_init_all(void) {
     gpio_set_pullup(ECHO_2_PORT, ECHO_2_PIN, 0);
     gpio_set_pullup(ECHO_3_PORT, ECHO_3_PIN, 0);
     gpio_set_pullup(ECHO_4_PORT, ECHO_4_PIN, 0);
+<<<<<<< HEAD
     gpio_set_pullup(ECHO_5_PORT, ECHO_5_PIN, 0);    
+=======
+    gpio_set_pullup(ECHO_5_PORT, ECHO_5_PIN, 0);
+>>>>>>> b028cb4a59e53d13bc4401150383cd2914b18671
     gpio_set_pullup(ECHO_6_PORT, ECHO_6_PIN, 0);
     
     // Configure Timer1 for microsecond timing (prescaler 8)
